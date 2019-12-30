@@ -1,5 +1,5 @@
 # print_yaml_keys
-Takes a yaml file and print just the keys to STDOUT
+Takes a yaml file and prints just the keys to STDOUT
 
 usage: print_yaml_keys [-h] [file]
 
