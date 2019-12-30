@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+'''
+Takes a yaml file and print just the keys to STDOUT
+
+usage: print_yaml_keys [-h] [file]
+
+positional arguments:
+  file        The path to a yaml file (defaults to STDIN)
+
+optional arguments:
+  -h, --help  show help message and exit
+
+Ben Crisp (ben@thecrisp.io)
+'''
+import argparse
+import sys
+import yaml
+
+def get_keys(file):
+    '''Takes a yaml file and returns a list of the keys
+
+    Args:
+        file (File object): A yaml file
+
+    Returns:
+        keys (list): A list of keys from the yaml file
+
+    '''
+    keys = []
+    data = yaml.safe_load(file)
+    try:
+        for key, value in data.items():
+            keys.append(key)
+    except AttributeError:
+        print('Invalid yaml')
+        sys.exit(2)
+    return keys
+
+def print_list(list):
+    '''Prints items in a list as strings 1 per line
+        
+        Args:
+            list (list): The list to be printed
+
+    '''
+    for item in list:
+        print(item)
+    return
+
+def main():
+    description = "Take a yaml file and print just the keys to STDOUT"
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument('file', help='The path to a yaml file (defaults to STDIN)', \
+            nargs='?', type=argparse.FileType('r'), default=sys.stdin)
+    args = parser.parse_args()
+    print_list(get_keys(args.file))
+
+if __name__ == '__main__':
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.exit(1)
